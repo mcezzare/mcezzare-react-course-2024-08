@@ -19,7 +19,7 @@ export const HomeScreen = () => {
     staleTime: 1000 * 60 * 60, // 60 minutes
 
   } );
-  console.log( isError );
+  console.log( data );
 
   return (
     <View>

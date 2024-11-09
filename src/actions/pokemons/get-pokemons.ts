@@ -1,21 +1,32 @@
 import { pokeApi } from '../../config/api/pokeApi';
-import { Pokemon } from '../../domain/entities/pokemon';
+import type { Pokemon } from '../../domain/entities/pokemon';
+import type { PokeAPIPaginatedResponse, PokeAPIPokemon } from '../../infrastructure/interfaces/pokeapi.interfaces';
 
-// export const sleep = async () => {
-//   return new Promise( resolve => setTimeout( resolve, 2000 ) );
-// };
-
-export const getPokemons = async (): Promise<Pokemon[]> => {
+export const getPokemons = async ( page: number, limit: number = 20 ): Promise<Pokemon[]> => {
   console.log( 'Getting Pokemons' );
-  // await sleep();
+
 
   try {
 
-    const url = '/pokemon';
-    const { data, status, config } = await pokeApi.get( url );
+    const url = `/pokemon?offset=${ page * 10 }&limit=${ limit }}`;
+    // const url = '/pokemon';
+    const { data } = await pokeApi.get<PokeAPIPaginatedResponse>( url );
+    // console.log( `offset=${ page * 10 }&limit=${ limit }}` );
+
+    // 20 em sequencia
+    // const pokemonPromises = data.results.map( async ( info ) => {
+    //   return await pokeApi.get( info.url );
+    // } );
+
+    // 20 em paralelo
+    const pokemonPromises = data.results.map( ( info ) => {
+      return pokeApi.get<PokeAPIPokemon>( info.url );
+    } );
+
+    const pokeApiPokemons = await Promise.all( pokemonPromises );
 
 
-    console.log( data, status, config );
+    console.log( data, pokeApiPokemons );
 
 
     return [];

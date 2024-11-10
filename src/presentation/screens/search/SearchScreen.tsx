@@ -1,8 +1,10 @@
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
+
 export const SearchScreen = () => {
   return (
     <View>
-      <Text style={ { fontSize: 30 } }>SearchScreen</Text>
+      <Text>SearchScreen</Text>
+      
     </View>
-  );
-};
+  )
+}

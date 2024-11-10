@@ -1,3 +1,5 @@
+
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -5,6 +7,8 @@ export interface Pokemon {
   avatar: string;
   sprites: string[];
 
-  // todo: color : string;
+  // todo:
+  // color: string;
 
 }
+

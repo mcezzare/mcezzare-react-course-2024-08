@@ -1,8 +1,10 @@
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
+
 export const PokemonScreen = () => {
   return (
     <View>
-      <Text style={ { fontSize: 30 } }>PokemonScreen</Text>
+      <Text>PokemonScreen</Text>
+      
     </View>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react-native/no-inline-styles */
 import { useContext } from 'react';
-import { StyleProp, ViewStyle, Image, ImageStyle, StyleSheet } from 'react-native';
+import { StyleProp, Image, ImageStyle } from 'react-native';
 import { ThemeContext } from '../../context/ThemeContext';
 
 interface Props {

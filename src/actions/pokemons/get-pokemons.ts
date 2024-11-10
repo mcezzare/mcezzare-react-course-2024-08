@@ -25,7 +25,7 @@ export const getPokemons = async (
       PokemonMapper.pokeApiPokemonToEntity( item.data ),
     );
 
-    console.log( pokemons[ 0 ] );
+    // console.log( pokemons[ 0 ] );
 
 
     return pokemons;

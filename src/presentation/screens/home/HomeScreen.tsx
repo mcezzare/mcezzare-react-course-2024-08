@@ -2,10 +2,7 @@
 import { View } from 'react-native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 import { getPokemons } from '../../../actions/pokemons';
-import { Pokemon } from '../../../domain/entities/pokemon';
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-
 
 
 export const HomeScreen = () => {
@@ -13,13 +10,16 @@ export const HomeScreen = () => {
   // const [ hasError, setHasError ] = useState( '' );
   // const [ pokemon, setPokemon ] = useState<Pokemon[]>( [] );
 
-  const { isLoading, data, isError } = useQuery( {
+  const { isLoading, data = [] } = useQuery( {
     queryKey: [ 'pokemons' ], // cache key
-    queryFn: () => getPokemons(),
+    queryFn: () => getPokemons(
+      0,
+
+    ),
     staleTime: 1000 * 60 * 60, // 60 minutes
 
   } );
-  console.log( data );
+  // TL;DR console.log( data );
 
   return (
     <View>
@@ -29,7 +29,6 @@ export const HomeScreen = () => {
           ? <ActivityIndicator />
           : <Button mode="contained" onPress={ () => {
             console.log( 'Pressed' );
-            // getPokemons();
           } }>
             Press me
           </Button>

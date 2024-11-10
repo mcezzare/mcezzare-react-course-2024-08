@@ -10,7 +10,7 @@ export interface Result {
   url: string;
 }
 
-export interface PokeAPIPokemon {
+export interface PokeApiPokemon {
   abilities: Ability[];
   base_experience: number;
   cries: Cries;

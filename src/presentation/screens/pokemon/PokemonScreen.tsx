@@ -97,19 +97,6 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
       />
       <View style={ { height: 10 } } />
 
-      {/* <View
-        style={ { flexDirection: 'row', marginHorizontal: 20, marginTop: 10 } }>
-        <Text variant='displaySmall' style={ { alignSelf: 'baseline' } }>Abilities</Text>
-        { pokemon.abilities.map( ability => (
-          <Chip
-            key={ ability }
-            mode="outlined"
-            selectedColor="white"
-            style={ { marginLeft: 10 } }>
-            { ability }
-          </Chip>
-        ) ) }
-      </View> */}
       {/* Abilities */ }
       <Text style={ styles.subTitle }>Abilities</Text>
       <FlatList
@@ -126,6 +113,45 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
           </Chip>
         ) }
       />
+
+      {/* Stats */ }
+      <Text style={ styles.subTitle }>Stats</Text>
+
+      <FlatList
+        data={ pokemon.stats }
+        horizontal
+        keyExtractor={ item => item.name }
+        showsHorizontalScrollIndicator={ false }
+        renderItem={ ( { item } ) => (
+          <View style={ styles.statsContainer }>
+            <Text style={ { flex: 1, color: 'white', fontWeight: 'bold' } }>
+              { Formatter.capitalize( item.name ) }
+            </Text>
+            <Text style={ { color: 'white' } }>{ item.value }</Text>
+          </View>
+
+        ) }
+      />
+
+      {/* Moves */ }
+      <Text style={ styles.subTitle }>Moves</Text>
+
+      <FlatList
+        data={ pokemon.moves }
+        horizontal
+        keyExtractor={ item => item.name }
+        showsHorizontalScrollIndicator={ false }
+        renderItem={ ( { item } ) => (
+          <View style={ styles.statsContainer }>
+            <Text style={ { flex: 1, color: 'white', fontWeight: 'bold' } }>
+              { Formatter.capitalize( item.name ) }
+            </Text>
+            <Text style={ { color: 'white' } }>{ item.level }</Text>
+          </View>
+
+        ) }
+      />
+      <View style={ { height: 30 } } />
 
       {/* TODO :
           games?: string[];

@@ -11,9 +11,9 @@ export interface Pokemon {
   color: string;
   // TODO: remove ? after implementation
   games?: string[];
-  stats?: Stat[];
+  stats: Stat[];
   abilities: string[];
-  moves?: Move[];
+  moves: Move[];
 }
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
 import { StyleSheet, View } from 'react-native';
@@ -9,10 +10,13 @@ import { FlatList } from 'react-native-gesture-handler';
 import { globalTheme } from '../../../config/theme/global-theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PokemonCard } from '../../components/pokemons/PokemonCard';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 export const HomeScreen = () => {
 
   const { top } = useSafeAreaInsets();
+  const { isDark } = useContext( ThemeContext );
 
   // default way of making requests http
   // const { isLoading, data: pokemons = [] } = useQuery( {
@@ -40,7 +44,9 @@ export const HomeScreen = () => {
         numColumns={ 2 }
         style={ { paddingTop: top + 20 } }
         ListHeaderComponent={ () => (
-          <Text variant="displayMedium">Pokédex</Text>
+          <Text variant="displayMedium" style={ {
+            color: isDark ? 'white' : 'black',
+          } }>Pokédex</Text>
         ) }
         renderItem={ ( { item } ) => <PokemonCard pokemon={ item } /> }
         onEndReachedThreshold={ 0.6 }

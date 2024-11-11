@@ -37,7 +37,7 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
   }
 
 
-
+  console.log( pokemon.abilities );
   return (
     <ScrollView
       style={ { flex: 1, backgroundColor: pokemon.color } }
@@ -61,8 +61,11 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
       </View>
 
       {/* Types */ }
+      <Text style={ styles.subTitle }>Types</Text>
       <View
         style={ { flexDirection: 'row', marginHorizontal: 20, marginTop: 10 } }>
+        {/* <Text variant='displaySmall' style={ { alignSelf: 'baseline', color: 'white' } }>Types</Text> */ }
+
         { pokemon.types.map( type => (
           <Chip
             key={ type }
@@ -92,9 +95,38 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
           />
         ) }
       />
+      <View style={ { height: 10 } } />
 
+      {/* <View
+        style={ { flexDirection: 'row', marginHorizontal: 20, marginTop: 10 } }>
+        <Text variant='displaySmall' style={ { alignSelf: 'baseline' } }>Abilities</Text>
+        { pokemon.abilities.map( ability => (
+          <Chip
+            key={ ability }
+            mode="outlined"
+            selectedColor="white"
+            style={ { marginLeft: 10 } }>
+            { ability }
+          </Chip>
+        ) ) }
+      </View> */}
+      {/* Abilities */ }
+      <Text style={ styles.subTitle }>Abilities</Text>
+      <FlatList
+        data={ pokemon.abilities }
+        horizontal
+        keyExtractor={ item => item }
+        showsHorizontalScrollIndicator={ false }
+        renderItem={ ( { item } ) => (
+          <Chip
+            selectedColor="white"
+            style={ { marginLeft: 5 } }
+          >
+            { Formatter.capitalize( item ) }
+          </Chip>
+        ) }
+      />
 
-      <View style={ { height: 100 } } />
       {/* TODO :
           games?: string[];
           stats?: Stat[];

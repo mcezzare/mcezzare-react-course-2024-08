@@ -22,6 +22,7 @@ export class PokemonMapper {
       sprites: sprites,
       types: data.types.map( type => type.type.name ),
       color: color,
+      abilities: data.abilities.map( ability => ability.ability.name ),
     };
 
   }

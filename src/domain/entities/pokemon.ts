@@ -12,7 +12,7 @@ export interface Pokemon {
   // TODO: remove ? after implementation
   games?: string[];
   stats?: Stat[];
-  abilities?: string[];
+  abilities: string[];
   moves?: Move[];
 }
 

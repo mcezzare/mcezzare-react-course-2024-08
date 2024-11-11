@@ -95,6 +95,13 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
 
 
       <View style={ { height: 100 } } />
+      {/* TODO :
+          games?: string[];
+          stats?: Stat[];
+          abilities?: string[];
+          moves?: Move[];
+        */}
+
     </ScrollView>
   );
 

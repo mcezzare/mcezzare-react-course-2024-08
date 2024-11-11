@@ -20,7 +20,7 @@ export const StackNavigator = () => {
       headerShown: false,
     } }>
       <Stack.Screen name="HomeScreen" component={ HomeScreen } />
-      <Stack.Screen name="PokemonScreen" component={ PokemonScreen } options={ { headerShown: true } } />
+      <Stack.Screen name="PokemonScreen" component={ PokemonScreen } options={ { headerShown: false } } />
       <Stack.Screen name="SearchScreen" component={ SearchScreen } />
 
     </Stack.Navigator>

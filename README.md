@@ -1,4 +1,79 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+- [Pokedex App](#pokedex-app)
+  * [Running this project](#running-this-project)
+- [Getting Started](#getting-started)
+  * [Step 1: Start the Metro Server](#step-1--start-the-metro-server)
+  * [Step 2: Start your Application](#step-2--start-your-application)
+    + [For Android](#for-android)
+    + [For iOS](#for-ios)
+  * [Step 3: Modifying your App](#step-3--modifying-your-app)
+  * [Congratulations! :tada:](#congratulations---tada-)
+    + [Now what?](#now-what-)
+- [Troubleshooting](#troubleshooting)
+- [Learn More](#learn-more)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+# Pokedex App
+This is an Pokedex App to see information about Pokemons and show usage with [tanstack/react-query](https://tanstack.com/query/latest) and [react-native-paper](https://reactnativepaper.com/) [**React Native**](https://reactnative.dev) project,  bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+created with 
+```sh
+npx @react-native-community/cli@15.0.0 init pokedexApp --version 0.76
+```
+
+## Running this project
+![image_result](./repository_media/project_result.png)
+![image_result](./repository_media/project_result2.png)
+
+
+To run this project , assuming you have all android and ios running (emulators) 
+
+If not installed install [brew](https://brew.sh/)
+
+> Install brew 
+
+With brew 
+> Install rbenv with ruby min 3.3.0
+
+```shell
+brew install rbenv
+rbenv install 3.3.0
+```
+
+
+Install nvm and node , and with nvm run 
+
+```shell
+brew install nvm
+```
+
+```shell
+nvm install v20.18.0
+```
+inside root application folder  there is a `.nvmrc` file. Run command above to use `Node v20.18.0` version. 
+
+```shell
+nvm use 
+``` 
+> With npm
+
+Then install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+
+```shell
+npm -g install yarn
+```
+
+And then build deps
+```shell
+npm install
+npx pod-install
+nmp start
+```
+
+pod install will use ruby version 3.3.0 because of the file `.ruby-version`
+
+
+Follow react-native cli with `a` to start android and then `i` to start ios. You will see something like `./repository_media/project_result.png`
 
 # Getting Started
 
@@ -50,7 +125,7 @@ This is one way to run your app — you can also run it directly from within And
 
 Now that you have successfully run the app, let's modify it.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
+1. Open `PokedexApp.tsx` in your text editor of choice and edit some lines.
 2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
    For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!

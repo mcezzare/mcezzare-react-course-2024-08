@@ -6,7 +6,6 @@ import {
   Animated,
   ImageStyle,
   StyleProp,
-  Text,
   View,
 } from 'react-native';
 import { useAnimation } from '../../hooks/useAnimation';
@@ -48,7 +47,7 @@ export const FadeInImage = ( { uri, style }: Props ) => {
       <Animated.Image
         source={ { uri } }
         onLoadEnd={ onLoadEnd }
-        style={ [ style, { opacity: animatedOpacity } ] }
+        style={ [ style, { opacity: animatedOpacity, resizeMode: 'contain' } ] }
       />
     </View>
   );

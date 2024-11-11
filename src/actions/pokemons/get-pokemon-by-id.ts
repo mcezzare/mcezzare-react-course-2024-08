@@ -7,11 +7,11 @@ import { PokemonMapper } from '../../infrastructure/mappers/pokemon.mapper';
 export const getPokemonById = async ( id: number ): Promise<Pokemon> => {
 
   try {
-
+    console.log( `request http: ${ id }` );
     const { data } = await pokeApi.get<PokeAPIPokemon>( `/pokemon/${ id }` );
 
     const pokemon = await PokemonMapper.pokeApiPokemonToEntity( data );
-    console.log( { pokemon } );
+    // console.log( { pokemon } );
     return pokemon;
 
   } catch ( error ) {

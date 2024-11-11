@@ -7,8 +7,8 @@ export interface Pokemon {
   avatar: string;
   sprites: string[];
 
-  // todo:
-  // color: string;
+
+  color: string;
 
 }
 

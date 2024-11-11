@@ -13,7 +13,7 @@ export const getPokemons = async (
   try {
     const url = `/pokemon?offset=${ page * 10 }&limit=${ limit }`;
     const { data } = await pokeApi.get<PokeAPIPaginatedResponse>( url );
-
+    // console.log( url );
     const pokemonPromises = data.results.map( info => {
       return pokeApi.get<PokeAPIPokemon>( info.url );
     } );

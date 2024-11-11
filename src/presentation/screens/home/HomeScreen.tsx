@@ -27,11 +27,8 @@ export const HomeScreen = () => {
     queryFn: ( params ) => getPokemons( params.pageParam ),
     getNextPageParam: ( lastPage, pages ) => pages.length,
     staleTime: 1000 * 60 * 60, // 60 minutes
-    // queryFn: () => getPokemons( 0 ),
-    // staleTime: 1000 * 60 * 60, // 60 minutes
   } );
 
-  // console.log( data );
 
   return (
     <View style={ globalTheme.globalMargin }>

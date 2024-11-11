@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/react-in-jsx-scope */
 import { Image, StyleSheet, View } from 'react-native';
 import { Pokemon } from '../../../domain/entities/pokemon';
 import { Card, Text } from 'react-native-paper';
@@ -7,34 +9,36 @@ interface Props {
 }
 
 
-export const PokemonCard = ({pokemon}: Props) => {
+export const PokemonCard = ( { pokemon }: Props ) => {
   return (
     // TODO: color de fondo
-    <Card style={[ styles.cardContainer  ]}>
+    <Card style={ [ styles.cardContainer ] }>
       <Text style={ styles.name } variant="bodyLarge" lineBreakMode='middle' >
-        {pokemon.name}
+        { pokemon.name }
         { '\n#' + pokemon.id }
       </Text>
 
-      {/* Pokeball background image */}
+
+      {/* Pokeball background image */ }
       <View style={ styles.pokeballContainer }>
-          <Image
-            source={ require('../../../assets/pokeball-light.png') }
-            style={ styles.pokeball } />
+        <Image
+          source={ require( '../../../assets/pokeball-light.png' ) }
+          style={ styles.pokeball } />
       </View>
 
-      {/* POkemon Image */}
-      <Image 
-        source={{ uri: pokemon.avatar }}
+      {/* POkemon Image */ }
+      <Image
+        source={ { uri: pokemon.avatar } }
         style={ styles.pokemonImage }
       />
 
-      {/* Types */}
-      <Text style={[ styles.name, { marginTop: 35 } ]}>{ pokemon.types[0] }</Text>
+      {/* Types */ }
+      <Text style={ [ styles.name, { marginTop: 35 } ] }>{ pokemon.types[ 0 ] }</Text>
+
 
     </Card>
-  )
-}
+  );
+};
 
 
 
@@ -44,7 +48,7 @@ export const PokemonCard = ({pokemon}: Props) => {
 
 
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   cardContainer: {
     marginHorizontal: 10,
     backgroundColor: 'grey',
@@ -90,4 +94,4 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     opacity: 0.5,
   },
-});
+} );

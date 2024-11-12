@@ -2,7 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react-native/no-inline-styles */
 import { StackScreenProps } from '@react-navigation/stack';
-import { Alert, Button, FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, View, StyleProp } from 'react-native';
 import { RootStackParams } from '../../navigator/StackNavigator';
 import { useQuery } from '@tanstack/react-query';
 import { getPokemonById } from '../../../actions/pokemons';
@@ -15,7 +15,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 
 // extra course
-import Sound from 'react-native-sound';
+import { PokemonAudioPlayer } from './PokemonAudioPlayer';
 interface Props extends StackScreenProps<RootStackParams> { }
 
 export const PokemonScreen = ( { navigation, route }: Props ) => {
@@ -33,33 +33,9 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
     staleTime: 100 * 60 * 60, // 1 hour
   } );
 
-  const playAudio = ( url: string ) => {
-    const sound = new Sound( url, null, ( error ) => {
-      if ( error ) {
-        Alert.alert( "Erro", "Não foi possível carregar o áudio" );
-        return;
-      }
-      sound.play( ( success ) => {
-        if ( !success ) {
-          Alert.alert( "Erro", "Falha ao reproduzir o áudio" );
-        }
-        sound.release(); // Libera o recurso quando terminar
-      } );
-    } );
-  };
-
   const pokemonAudio = {
     latest: pokemon?.cries.latest,
     legacy: pokemon?.cries.legacy,
-  };
-
-  const PokemonAudioPlayer = ( { pokemonAudio } ) => {
-    return (
-      <View>
-        <Button title="Tocar Áudio Latest" onPress={ () => playAudio( pokemonAudio.latest ) } />
-        <Button title="Tocar Áudio Legacy" onPress={ () => playAudio( pokemonAudio.legacy ) } />
-      </View>
-    );
   };
 
   if ( !pokemon ) { //isLoading
@@ -91,6 +67,13 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
 
         <FadeInImage uri={ pokemon.avatar } style={ styles.pokemonImage } />
       </View>
+
+      <View>
+        <PokemonAudioPlayer
+          pokemonAudio={ pokemon.cries }
+        />
+      </View>
+
 
       {/* Types */ }
       <Text style={ styles.subTitle }>Types</Text>
@@ -199,10 +182,6 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
           </Chip>
 
         ) }
-      />
-
-      <PokemonAudioPlayer
-        pokemonAudio={ pokemonAudio }
       />
 
       <View style={ { height: 30 } } />

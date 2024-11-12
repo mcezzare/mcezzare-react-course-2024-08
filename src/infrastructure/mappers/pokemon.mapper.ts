@@ -32,6 +32,7 @@ export class PokemonMapper {
         .sort( ( a, b ) => a.level - b.level ),
       games: data.game_indices.map( game => game.version.name ),
       cries: data.cries,
+      description: data.description,
     };
 
   }

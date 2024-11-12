@@ -2,7 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react-native/no-inline-styles */
 import { StackScreenProps } from '@react-navigation/stack';
-import { FlatList, Image, ScrollView, StyleSheet, View, StyleProp } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { RootStackParams } from '../../navigator/StackNavigator';
 import { useQuery } from '@tanstack/react-query';
 import { getPokemonById } from '../../../actions/pokemons';
@@ -18,7 +18,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { PokemonAudioPlayer } from './PokemonAudioPlayer';
 interface Props extends StackScreenProps<RootStackParams> { }
 
-export const PokemonScreen = ( { navigation, route }: Props ) => {
+export const PokemonScreen = ( { route }: Props ) => {
   const { isDark } = useContext( ThemeContext );
   const { top } = useSafeAreaInsets();
   const { pokemonId } = route.params;
@@ -27,16 +27,13 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
     ? require( '../../../assets/pokeball-light.png' )
     : require( '../../../assets/pokeball-dark.png' );
 
-  const { isLoading, data: pokemon } = useQuery( {
+  const { data: pokemon } = useQuery( {
     queryKey: [ 'pokemon', pokemonId ], // query cache ;)
     queryFn: () => getPokemonById( pokemonId ),
-    staleTime: 100 * 60 * 60, // 1 hour
+    // staleTime: 100 * 60 * 60, // 1 hour
+    staleTime: 100 * 60 * 1, // 1 hour
   } );
 
-  const pokemonAudio = {
-    latest: pokemon?.cries.latest,
-    legacy: pokemon?.cries.legacy,
-  };
 
   if ( !pokemon ) { //isLoading
     return (
@@ -45,7 +42,7 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
   }
 
 
-  // console.log( pokemon.cries );
+  // console.log( pokemon );
   return (
     <ScrollView
       style={ { flex: 1, backgroundColor: pokemon.color } }
@@ -74,6 +71,10 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
         />
       </View>
 
+      {/* Description */ }
+      <View>
+        <Text style={ styles.description }>"{ pokemon.description ?? '...' }"</Text>
+      </View>
 
       {/* Types */ }
       <Text style={ styles.subTitle }>Types</Text>
@@ -239,6 +240,15 @@ const styles = StyleSheet.create( {
     fontWeight: 'bold',
     marginHorizontal: 20,
     marginTop: 20,
+  },
+  description: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    marginHorizontal: 20,
+    marginTop: 20,
+    textAlign: 'center'
   },
   statsContainer: {
     flexDirection: 'column',

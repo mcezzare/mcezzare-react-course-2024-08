@@ -30,7 +30,7 @@ export class PokemonMapper {
       moves: data.moves
         .map( move => ( { name: move.move.name, level: move.version_group_details[ 0 ].level_learned_at } ) )
         .sort( ( a, b ) => a.level - b.level ),
-
+      games: data.game_indices.map( game => game.version.name ),
     };
 
   }

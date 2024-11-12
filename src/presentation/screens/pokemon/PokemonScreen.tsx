@@ -151,6 +151,21 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
 
         ) }
       />
+
+      {/* Games */ }
+      <Text style={ styles.subTitle }>Games</Text>
+
+      <FlatList
+        data={ pokemon.games }
+        horizontal
+        keyExtractor={ item => item }
+        showsHorizontalScrollIndicator={ false }
+        renderItem={ ( { item } ) => (
+          <Chip selectedColor="white">{ Formatter.capitalize( item ) } </Chip>
+
+        ) }
+      />
+
       <View style={ { height: 30 } } />
 
       {/* TODO :

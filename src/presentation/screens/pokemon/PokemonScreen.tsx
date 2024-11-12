@@ -13,9 +13,10 @@ import { FadeInImage } from '../../components/ui/FadeInImage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
+import PokemonAudioPlayer from '../../components/pokemons/PokemonAudioPlayer';
 
 // extra course
-import Sound from 'react-native-sound';
+
 interface Props extends StackScreenProps<RootStackParams> { }
 
 export const PokemonScreen = ( { navigation, route }: Props ) => {
@@ -33,6 +34,12 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
     staleTime: 100 * 60 * 60, // 1 hour
   } );
 
+  const pokemonAudio = {
+    latest: pokemon?.cries.latest,
+    legacy: pokemon?.cries.legacy,
+  };
+
+  /*
   const playAudio = ( url: string ) => {
     const sound = new Sound( url, null, ( error ) => {
       if ( error ) {
@@ -48,10 +55,7 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
     } );
   };
 
-  const pokemonAudio = {
-    latest: pokemon?.cries.latest,
-    legacy: pokemon?.cries.legacy,
-  };
+
 
   const PokemonAudioPlayer = ( { pokemonAudio } ) => {
     return (
@@ -61,7 +65,7 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
       </View>
     );
   };
-
+*/
   if ( !pokemon ) { //isLoading
     return (
       <FullScreenLoader />
@@ -200,6 +204,8 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
 
         ) }
       />
+
+
 
       <PokemonAudioPlayer
         pokemonAudio={ pokemonAudio }

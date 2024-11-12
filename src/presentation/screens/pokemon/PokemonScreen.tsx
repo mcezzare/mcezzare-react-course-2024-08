@@ -16,6 +16,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 
 // extra course
 import { PokemonAudioPlayer } from './PokemonAudioPlayer';
+import PokemonTypeIcon from '../../components/pokemons/PokemonTypeIcon';
 interface Props extends StackScreenProps<RootStackParams> { }
 
 export const PokemonScreen = ( { route }: Props ) => {
@@ -83,12 +84,19 @@ export const PokemonScreen = ( { route }: Props ) => {
         {/* <Text variant='displaySmall' style={ { alignSelf: 'baseline', color: 'white' } }>Types</Text> */ }
 
         { pokemon.types.map( type => (
+          // <Chip
+          //   key={ type }
+          //   mode="outlined"
+          //   selectedColor="white"
+          //   style={ { marginLeft: 10 } }>
+          //   { type }
+          // </Chip>
           <Chip
             key={ type }
             mode="outlined"
             selectedColor="white"
             style={ { marginLeft: 10 } }>
-            { type }
+            <PokemonTypeIcon type={ type } />
           </Chip>
         ) ) }
       </View>

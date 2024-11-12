@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react-native/no-inline-styles */
 import { StackScreenProps } from '@react-navigation/stack';
-import { FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Button, FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { RootStackParams } from '../../navigator/StackNavigator';
 import { useQuery } from '@tanstack/react-query';
 import { getPokemonById } from '../../../actions/pokemons';
@@ -13,6 +14,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 
+// extra course
+import Sound from 'react-native-sound';
 interface Props extends StackScreenProps<RootStackParams> { }
 
 export const PokemonScreen = ( { navigation, route }: Props ) => {
@@ -30,6 +33,35 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
     staleTime: 100 * 60 * 60, // 1 hour
   } );
 
+  const playAudio = ( url: string ) => {
+    const sound = new Sound( url, null, ( error ) => {
+      if ( error ) {
+        Alert.alert( "Erro", "Não foi possível carregar o áudio" );
+        return;
+      }
+      sound.play( ( success ) => {
+        if ( !success ) {
+          Alert.alert( "Erro", "Falha ao reproduzir o áudio" );
+        }
+        sound.release(); // Libera o recurso quando terminar
+      } );
+    } );
+  };
+
+  const pokemonAudio = {
+    latest: pokemon?.cries.latest,
+    legacy: pokemon?.cries.legacy,
+  };
+
+  const PokemonAudioPlayer = ( { pokemonAudio } ) => {
+    return (
+      <View>
+        <Button title="Tocar Áudio Latest" onPress={ () => playAudio( pokemonAudio.latest ) } />
+        <Button title="Tocar Áudio Legacy" onPress={ () => playAudio( pokemonAudio.legacy ) } />
+      </View>
+    );
+  };
+
   if ( !pokemon ) { //isLoading
     return (
       <FullScreenLoader />
@@ -37,7 +69,7 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
   }
 
 
-  console.log( pokemon.abilities );
+  // console.log( pokemon.cries );
   return (
     <ScrollView
       style={ { flex: 1, backgroundColor: pokemon.color } }
@@ -161,9 +193,16 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
         keyExtractor={ item => item }
         showsHorizontalScrollIndicator={ false }
         renderItem={ ( { item } ) => (
-          <Chip selectedColor="white">{ Formatter.capitalize( item ) } </Chip>
+          <Chip
+            style={ { marginLeft: 5 } }
+            selectedColor="white">{ Formatter.capitalize( item ) }
+          </Chip>
 
         ) }
+      />
+
+      <PokemonAudioPlayer
+        pokemonAudio={ pokemonAudio }
       />
 
       <View style={ { height: 30 } } />
@@ -179,6 +218,8 @@ export const PokemonScreen = ( { navigation, route }: Props ) => {
   );
 
 };
+
+
 
 
 const styles = StyleSheet.create( {

@@ -49,3 +49,38 @@ export const getPokemonById = async ( id: number, characteristics = true ): Prom
   }
 
 };
+
+
+// to refactor 
+
+// import { pokeApi } from '../../config/api/pokeApi';
+// import { Pokemon } from '../../domain/entities/pokemon';
+// import { PokeAPIPokemon, PokemonCharacteristicResponse } from '../../infrastructure/interfaces/pokepi.interfaces';
+// import { PokemonMapper } from '../../infrastructure/mappers/pokemon.mapper';
+
+// const CHARACTERISTIC_LIMIT_ID = 30;
+
+// export const getPokemonById = async (id: number, characteristics = true): Promise<Pokemon> => {
+//   try {
+//     const requests = [pokeApi.get<PokeAPIPokemon>(`/pokemon/${id}`)];
+
+//     if (characteristics && id < CHARACTERISTIC_LIMIT_ID) {
+//       requests.push(pokeApi.get<PokemonCharacteristicResponse>(`/characteristic/${id}`));
+//     }
+
+//     const [pokemonData, characteristicsData] = await Promise.all(requests);
+//     const pokemon = await PokemonMapper.pokeApiPokemonToEntity(pokemonData.data);
+
+//     if (characteristicsData) {
+//       const englishDescription = characteristicsData.data.descriptions.find(
+//         (desc) => desc.language.name === "en"
+//       )?.description;
+//       pokemon.description = englishDescription || 'no description';
+//     }
+
+//     return pokemon;
+//   } catch (error) {
+//     console.error(`Error getting pokemon by id: ${id}`, error);
+//     throw new Error(`Error getting pokemon by id: ${id}`);
+//   }
+// };

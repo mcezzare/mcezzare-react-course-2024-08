@@ -179,7 +179,7 @@ export const PokemonScreen = ( { route }: Props ) => {
       {/* Games */ }
       <Text style={ styles.subTitle }>Games</Text>
 
-      <FlatList
+      {/* <FlatList
         data={ pokemon.games }
         horizontal
         keyExtractor={ item => item }
@@ -191,7 +191,64 @@ export const PokemonScreen = ( { route }: Props ) => {
           </Chip>
 
         ) }
-      />
+      /> */}
+
+
+      {/* { pokemon.games && pokemon.games.length > 0 && (
+        <FlatList
+          data={ pokemon.games }
+          horizontal
+          keyExtractor={ ( item ) => item }
+          showsHorizontalScrollIndicator={ false }
+          renderItem={ ( { item } ) => (
+            <Chip style={ { marginLeft: 5 } } selectedColor="white">
+              { Formatter.capitalize( item ) }
+            </Chip>
+          ) }
+        />
+      ) } */}
+
+      {/* { pokemon?.games?.length > 0 && (
+        <FlatList
+          data={ pokemon.games }
+          horizontal
+          keyExtractor={ ( item ) => item }
+          showsHorizontalScrollIndicator={ false }
+          renderItem={ ( { item } ) => (
+            <Chip style={ { marginLeft: 5 } } selectedColor="white">
+              { Formatter.capitalize( item ) }
+            </Chip>
+          ) }
+        />
+      ) } */}
+
+      {/* { pokemon?.games?.filter( Boolean )?.length > 0 && (
+        <FlatList
+          data={ [ ...new Set( pokemon.games.filter( Boolean ) ) ] } // Remove valores nulos e duplicados
+          horizontal
+          keyExtractor={ ( item ) => item } // item deve ser uma string única
+          showsHorizontalScrollIndicator={ false }
+          renderItem={ ( { item } ) => (
+            <Chip style={ { marginLeft: 5 } } selectedColor="white">
+              { Formatter.capitalize( item ) }
+            </Chip>
+          ) }
+        />
+      ) } */}
+
+      { pokemon?.games && pokemon.games.filter( Boolean ).length > 0 && (
+        <FlatList
+          data={ pokemon.games.filter( ( item, index, self ) => item && self.indexOf( item ) === index ) } // Remove valores null e duplicados
+          horizontal
+          keyExtractor={ ( item, index ) => `${ item }-${ index }` } // Usa index como parte da chave para garantir unicidade
+          showsHorizontalScrollIndicator={ false }
+          renderItem={ ( { item } ) => (
+            <Chip style={ { marginLeft: 5 } } selectedColor="white">
+              { Formatter.capitalize( item ) }
+            </Chip>
+          ) }
+        />
+      ) }
 
       <View style={ { height: 30 } } />
 

@@ -43,7 +43,8 @@ export const PokemonScreen = ( { route }: Props ) => {
   }
 
 
-  // console.log( pokemon );
+  console.log( pokemon.games );
+
   return (
     <ScrollView
       style={ { flex: 1, backgroundColor: pokemon.color } }
@@ -84,13 +85,6 @@ export const PokemonScreen = ( { route }: Props ) => {
         {/* <Text variant='displaySmall' style={ { alignSelf: 'baseline', color: 'white' } }>Types</Text> */ }
 
         { pokemon.types.map( type => (
-          // <Chip
-          //   key={ type }
-          //   mode="outlined"
-          //   selectedColor="white"
-          //   style={ { marginLeft: 10 } }>
-          //   { type }
-          // </Chip>
           <Chip
             key={ type }
             mode="outlined"
@@ -179,7 +173,7 @@ export const PokemonScreen = ( { route }: Props ) => {
       {/* Games */ }
       <Text style={ styles.subTitle }>Games</Text>
 
-      {/* <FlatList
+      <FlatList
         data={ pokemon.games }
         horizontal
         keyExtractor={ item => item }
@@ -191,10 +185,10 @@ export const PokemonScreen = ( { route }: Props ) => {
           </Chip>
 
         ) }
-      /> */}
+      />
 
 
-      {/* { pokemon.games && pokemon.games.length > 0 && (
+      {/* { pokemon.games.length > 0 && (
         <FlatList
           data={ pokemon.games }
           horizontal
@@ -236,7 +230,7 @@ export const PokemonScreen = ( { route }: Props ) => {
         />
       ) } */}
 
-      { pokemon?.games && pokemon.games.filter( Boolean ).length > 0 && (
+      {/* { pokemon?.games && pokemon.games.filter( Boolean ).length > 0 && (
         <FlatList
           data={ pokemon.games.filter( ( item, index, self ) => item && self.indexOf( item ) === index ) } // Remove valores null e duplicados
           horizontal
@@ -248,7 +242,7 @@ export const PokemonScreen = ( { route }: Props ) => {
             </Chip>
           ) }
         />
-      ) }
+      ) } */}
 
       <View style={ { height: 30 } } />
 

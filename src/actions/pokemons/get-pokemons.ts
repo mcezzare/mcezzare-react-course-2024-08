@@ -10,6 +10,7 @@ export const getPokemons = async (
   page: number,
   limit: number = 20,
 ): Promise<Pokemon[]> => {
+  console.log( 'Getting Pokemons' );
   try {
     const url = `/pokemon?offset=${ page * 10 }&limit=${ limit }`;
     const { data } = await pokeApi.get<PokeAPIPaginatedResponse>( url );

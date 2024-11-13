@@ -9,7 +9,7 @@ import { PokeAPIPaginatedResponse } from '../../infrastructure/interfaces/pokepi
 export const getGetPokemonsWithNamesId = async () => {
   const url = 'pokemon?limit=1000';
   const { data } = await pokeApi.get<PokeAPIPaginatedResponse>( url );
-
+  console.log( 'Getting Pokemons to search' );
   return data.results.map( ( info ) => ( {
     id: Number( info.url.split( '/' )[ 6 ] ),
     name: info.name,

@@ -2,7 +2,7 @@
 import { FlatList, View } from 'react-native';
 import { globalTheme } from '../../../config/theme/global-theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useContext } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { ActivityIndicator, TextInput, Text } from 'react-native-paper';
 import { PokemonCard } from '../../components/pokemons/PokemonCard';
@@ -15,12 +15,38 @@ export const SearchScreen = () => {
   const { isDark } = useContext( ThemeContext );
 
   const colorText = isDark ? 'white' : 'black';
+  const [ term, setTerm ] = useState( '' );
+
   const { isLoading, data: pokemonNameList = [] } = useQuery( {
     queryKey: [ 'pokemons', 'all' ],
-    queryFn: () => getGetPokemonsWithNamesId()
+    queryFn: () => getGetPokemonsWithNamesId(),
   } );
 
   console.log( pokemonNameList );
+
+  // Todo: aplicar debounce
+  const pokemonNameIdList = useMemo( () => {
+
+    // its a number
+    if ( isNaN( Number( term ) ) ) {
+      const pokemon = pokemonNameList.find( pokemon => pokemon.id === Number( term ) );
+      return pokemon ? [ pokemon ] : [];
+    }
+
+    if ( term.length === 0 ) { return []; }
+    if ( term.length < 3 ) { return []; }
+
+    const test = pokemonNameList.filter( pokemon =>
+      pokemon.name.toLocaleLowerCase().includes( term.toLocaleLowerCase() ),
+    );
+
+    console.log( test );
+    return test;
+
+
+  }, [ term ] );
+
+
 
   return (
     <View style={ [ globalTheme.globalMargin, { paddingTop: top } ] }>
@@ -30,8 +56,12 @@ export const SearchScreen = () => {
         mode="flat"
         autoFocus
         autoCorrect={ false }
-        onChangeText={ value => console.log( value ) }
-        value="Hello World"
+        onChangeText={ value => {
+          console.log( { term } );
+          console.log( { value } );
+          // setTerm;
+        } }
+        value={ term }
         theme={ { colors: { text: colorText } } } // Define a cor do texto usando o valor de colorText
       />
       <ActivityIndicator style={ { paddingTop: 20 } } />
@@ -41,23 +71,23 @@ export const SearchScreen = () => {
       </Text>
 
 
-      <FlatList
+      {/* <FlatList
         // data={ data?.pages.flat() ?? [] }
         data={ [] as Pokemon[] }
         keyExtractor={ ( pokemon, index ) => `${ pokemon.id }-${ index }` }
         numColumns={ 2 }
         style={ { paddingTop: top + 20 } }
-        ListHeaderComponent={ () => (
-          <Text variant="displayMedium" style={ {
-            color: isDark ? 'white' : 'black',
-          } }>Pokédex</Text>
-        ) }
+        // ListHeaderComponent={ () => (
+        //   <Text variant="displayMedium" style={ {
+        //     color: isDark ? 'white' : 'black',
+        //   } }>Pokédex</Text>
+        // ) }
         renderItem={ ( { item } ) => <PokemonCard pokemon={ item } /> }
         showsVerticalScrollIndicator
       // onEndReachedThreshold={ 0.6 }
       // onEndReached={ () => fetchNextPage() }
       />
-
+    */}
     </View>
   );
 };

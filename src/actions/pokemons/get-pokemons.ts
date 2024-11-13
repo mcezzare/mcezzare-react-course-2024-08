@@ -8,13 +8,14 @@ import { PokemonMapper } from '../../infrastructure/mappers/pokemon.mapper';
 
 export const getPokemons = async (
   page: number,
-  limit: number = 20,
+  limit: number = 10,
 ): Promise<Pokemon[]> => {
   console.log( 'Getting Pokemons' );
   try {
     const url = `/pokemon?offset=${ page * 10 }&limit=${ limit }`;
     const { data } = await pokeApi.get<PokeAPIPaginatedResponse>( url );
-    // console.log( url );
+    console.log( `page:${ page }` );
+    console.log( url );
     const pokemonPromises = data.results.map( info => {
       return pokeApi.get<PokeAPIPokemon>( info.url );
     } );

@@ -28,7 +28,7 @@ const typeIcons: { [ key: string ]: any; } = {
 
 const PokemonTypeIcon: React.FC<PokemonTypeIconProps> = ( { type } ) => {
   const iconSource = typeIcons[ type ];
-  console.log( iconSource );
+  // console.log( iconSource );
   return (
     <View style={ styles.typeContainer }>
       { iconSource && <Image source={ iconSource } style={ styles.icon } /> }

@@ -14,7 +14,7 @@ interface Props {
 export const PlayAudioImage = ( { style }: Props ) => {
 
   const { isDark } = useContext( ThemeContext );
-  console.log( isDark );
+  // console.log( isDark );
   const AudioIconImage = require( '../../../assets/audio-play.png' );
 
   return (

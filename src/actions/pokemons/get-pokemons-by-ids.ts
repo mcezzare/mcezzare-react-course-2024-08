@@ -9,7 +9,7 @@ export const getPokemonsByIds = async ( ids: number[] ): Promise<Pokemon[]> => {
   try {
 
     const pokemonPromises: Promise<Pokemon>[] = ids.map( id => {
-      return getPokemonById( id );
+      return getPokemonById( id, false );
     } );
 
     return Promise.all( pokemonPromises );

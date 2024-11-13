@@ -33,7 +33,7 @@ export const HomeScreen = ( { navigation }: Props ) => {
   const { isLoading, data, fetchNextPage } = useInfiniteQuery( {
     queryKey: [ 'pokemons', 'infinite' ],
     initialPageParam: 0,
-    staleTime: 1000 * 60 * 60, // 60 minutes
+    staleTime: 1000 * 60 * 1, // 60 minutes
 
     queryFn: async ( params ) => {
       const pokemons = await getPokemons( params.pageParam );

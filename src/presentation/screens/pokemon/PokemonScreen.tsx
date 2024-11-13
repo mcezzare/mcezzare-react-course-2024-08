@@ -30,7 +30,7 @@ export const PokemonScreen = ( { route }: Props ) => {
 
   const { data: pokemon } = useQuery( {
     queryKey: [ 'pokemon', pokemonId ], // query cache ;)
-    queryFn: () => getPokemonById( pokemonId ),
+    queryFn: () => getPokemonById( pokemonId, true ),
     // staleTime: 100 * 60 * 60, // 1 hour
     staleTime: 100 * 60 * 1, // 1 minuto ou não traz a descrição no segundo request
   } );

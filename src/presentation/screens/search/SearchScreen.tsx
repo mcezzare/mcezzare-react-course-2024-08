@@ -1,83 +1,79 @@
 /* eslint-disable react/react-in-jsx-scope */
+
 import { FlatList, View } from 'react-native';
 import { globalTheme } from '../../../config/theme/global-theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useContext, useMemo, useState } from 'react';
-import { ThemeContext } from '../../context/ThemeContext';
 import { ActivityIndicator, TextInput, Text } from 'react-native-paper';
-import { PokemonCard } from '../../components/pokemons/PokemonCard';
 import { Pokemon } from '../../../domain/entities/pokemon';
+import { PokemonCard } from '../../components/pokemons/PokemonCard';
 import { useQuery } from '@tanstack/react-query';
-import { getGetPokemonsWithNamesId } from '../../../actions/pokemons';
+import {
+  getPokemonNamesWithId,
+  getPokemonsByIds,
+} from '../../../actions/pokemons';
+import { useMemo, useState } from 'react';
+import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
 
 export const SearchScreen = () => {
   const { top } = useSafeAreaInsets();
-  const { isDark } = useContext( ThemeContext );
-
-  const colorText = isDark ? 'white' : 'black';
   const [ term, setTerm ] = useState( '' );
 
   const { isLoading, data: pokemonNameList = [] } = useQuery( {
     queryKey: [ 'pokemons', 'all' ],
-    queryFn: () => getGetPokemonsWithNamesId(),
+    queryFn: () => getPokemonNamesWithId(),
   } );
 
-  //console.log( pokemonNameList );
-
-  // Todo: aplicar debounce1
+  // Todo: aplicar debounce
   const pokemonNameIdList = useMemo( () => {
-
-    // its a number
+    // Es un número
     if ( !isNaN( Number( term ) ) ) {
-      const pokemon = pokemonNameList.find( pokemon => pokemon.id === Number( term ) );
+      const pokemon = pokemonNameList.find(
+        pokemon => pokemon.id === Number( term ),
+      );
       return pokemon ? [ pokemon ] : [];
     }
 
-    if ( term.length === 0 ) { return []; }
-    if ( term.length < 3 ) { return []; }
+    if ( term.length === 0 ) return [];
+    if ( term.length < 3 ) return [];
 
-    const test = pokemonNameList.filter( pokemon =>
-      pokemon.name.toLocaleLowerCase().includes( term.toLocaleLowerCase() ),
+    return pokemonNameList.filter( pokemon =>
+      pokemon.name.includes( term.toLocaleLowerCase() ),
     );
-
-    console.log( test );
-    return test;
-
-
   }, [ term ] );
 
+  const { isLoading: isLoadingPokemons, data: pokemons = [] } = useQuery( {
+    queryKey: [ 'pokemons', 'by', pokemonNameIdList ],
+    queryFn: () =>
+      getPokemonsByIds( pokemonNameIdList.map( pokemon => pokemon.id ) ),
+    staleTime: 1000 * 60 * 5, // 5 minutos
+  } );
 
+  if ( isLoading ) {
+    return <FullScreenLoader />;
+  }
 
   return (
-    <View style={ [ globalTheme.globalMargin, { paddingTop: top } ] }>
-      {/* <Text style={ { color: colorText } }>SearchScreen</Text> */ }
+    <View style={ [ globalTheme.globalMargin, { paddingTop: top + 10 } ] }>
       <TextInput
-        placeholder="Search Pokemon"
+        placeholder="Buscar Pokémon"
         mode="flat"
         autoFocus
         autoCorrect={ false }
         onChangeText={ setTerm }
         value={ term }
-        theme={ { colors: { text: colorText } } } // Define a cor do texto usando o valor de colorText
       />
-      <ActivityIndicator style={ { paddingTop: 20 } } />
 
-      <Text style={ { color: colorText } }>
-        { JSON.stringify( pokemonNameIdList, null, 2 ) }
-      </Text>
+      { isLoadingPokemons && <ActivityIndicator style={ { paddingTop: 20 } } /> }
 
-
-      {/* <FlatList
-        // data={ data?.pages.flat() ?? [] }
-        data={ [] as Pokemon[] }
+      <FlatList
+        data={ pokemons }
         keyExtractor={ ( pokemon, index ) => `${ pokemon.id }-${ index }` }
         numColumns={ 2 }
+        style={ { paddingTop: top + 20 } }
         renderItem={ ( { item } ) => <PokemonCard pokemon={ item } /> }
-        showsVerticalScrollIndicator
-      // onEndReachedThreshold={ 0.6 }
-      // onEndReached={ () => fetchNextPage() }
-      /> */}
-
+        showsVerticalScrollIndicator={ false }
+        ListFooterComponent={ <View style={ { height: 150 } } /> }
+      />
     </View>
   );
 };

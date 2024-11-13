@@ -26,6 +26,7 @@ npx @react-native-community/cli@15.0.0 init pokedexApp --version 0.76
 ![image_result](./repository_media/project_result2.png)
 ![image_result](./repository_media/project_result3.png)
 ![image_result](./repository_media/project_result4.png)
+![image_result](./repository_media/project_result5.png)
 
 
 To run this project , assuming you have all android and ios running (emulators) 

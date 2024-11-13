@@ -17,9 +17,10 @@ import { ThemeContext } from '../../context/ThemeContext';
 // extra course
 import { PokemonAudioPlayer } from './PokemonAudioPlayer';
 import PokemonTypeIcon from '../../components/pokemons/PokemonTypeIcon';
-interface Props extends StackScreenProps<RootStackParams> { }
+interface Props extends StackScreenProps<RootStackParams, 'PokemonScreen'> { }
 
-export const PokemonScreen = ( { route }: Props ) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const PokemonScreen = ( { navigation, route }: Props ) => {
   const { isDark } = useContext( ThemeContext );
   const { top } = useSafeAreaInsets();
   const { pokemonId } = route.params;
@@ -42,8 +43,7 @@ export const PokemonScreen = ( { route }: Props ) => {
     );
   }
 
-
-  console.log( pokemon.games );
+  // console.log( pokemon.sprites );
 
   return (
     <ScrollView
@@ -82,8 +82,6 @@ export const PokemonScreen = ( { route }: Props ) => {
       <Text style={ styles.subTitle }>Types</Text>
       <View
         style={ { flexDirection: 'row', marginHorizontal: 20, marginTop: 10 } }>
-        {/* <Text variant='displaySmall' style={ { alignSelf: 'baseline', color: 'white' } }>Types</Text> */ }
-
         { pokemon.types.map( type => (
           <Chip
             key={ type }
@@ -96,23 +94,30 @@ export const PokemonScreen = ( { route }: Props ) => {
       </View>
 
       {/* Sprites */ }
-      <FlatList
-        data={ pokemon.sprites }
-        horizontal
-        keyExtractor={ item => item }
-        showsHorizontalScrollIndicator={ false }
-        centerContent
-        style={ {
-          marginTop: 20,
-          height: 100,
-        } }
-        renderItem={ ( { item } ) => (
-          <FadeInImage
-            uri={ item }
-            style={ { width: 100, height: 100, marginHorizontal: 5 } }
+      { // validate to avoid null values
+        pokemon?.sprites?.filter( Boolean )?.length > 0 && (
+
+          <FlatList
+            data={ [ ...new Set( pokemon.sprites.filter( Boolean ) ) ] }
+            horizontal
+            keyExtractor={ item => item }
+            showsHorizontalScrollIndicator={ false }
+            centerContent
+            style={ {
+              marginTop: 20,
+              height: 100,
+            } }
+            renderItem={ ( { item } ) => (
+              <FadeInImage
+                uri={ item }
+                style={ { width: 100, height: 100, marginHorizontal: 5 } }
+              />
+            ) }
           />
-        ) }
-      />
+        )
+      }
+
+
       <View style={ { height: 10 } } />
 
       {/* Abilities */ }
@@ -173,64 +178,7 @@ export const PokemonScreen = ( { route }: Props ) => {
       {/* Games */ }
       <Text style={ styles.subTitle }>Games</Text>
 
-      <FlatList
-        data={ pokemon.games }
-        horizontal
-        keyExtractor={ item => item }
-        showsHorizontalScrollIndicator={ false }
-        renderItem={ ( { item } ) => (
-          <Chip
-            style={ { marginLeft: 5 } }
-            selectedColor="white">{ Formatter.capitalize( item ) }
-          </Chip>
-
-        ) }
-      />
-
-
-      {/* { pokemon.games.length > 0 && (
-        <FlatList
-          data={ pokemon.games }
-          horizontal
-          keyExtractor={ ( item ) => item }
-          showsHorizontalScrollIndicator={ false }
-          renderItem={ ( { item } ) => (
-            <Chip style={ { marginLeft: 5 } } selectedColor="white">
-              { Formatter.capitalize( item ) }
-            </Chip>
-          ) }
-        />
-      ) } */}
-
-      {/* { pokemon?.games?.length > 0 && (
-        <FlatList
-          data={ pokemon.games }
-          horizontal
-          keyExtractor={ ( item ) => item }
-          showsHorizontalScrollIndicator={ false }
-          renderItem={ ( { item } ) => (
-            <Chip style={ { marginLeft: 5 } } selectedColor="white">
-              { Formatter.capitalize( item ) }
-            </Chip>
-          ) }
-        />
-      ) } */}
-
-      {/* { pokemon?.games?.filter( Boolean )?.length > 0 && (
-        <FlatList
-          data={ [ ...new Set( pokemon.games.filter( Boolean ) ) ] } // Remove valores nulos e duplicados
-          horizontal
-          keyExtractor={ ( item ) => item } // item deve ser uma string única
-          showsHorizontalScrollIndicator={ false }
-          renderItem={ ( { item } ) => (
-            <Chip style={ { marginLeft: 5 } } selectedColor="white">
-              { Formatter.capitalize( item ) }
-            </Chip>
-          ) }
-        />
-      ) } */}
-
-      {/* { pokemon?.games && pokemon.games.filter( Boolean ).length > 0 && (
+      { pokemon?.games && pokemon.games.filter( Boolean ).length > 0 && (
         <FlatList
           data={ pokemon.games.filter( ( item, index, self ) => item && self.indexOf( item ) === index ) } // Remove valores null e duplicados
           horizontal
@@ -242,7 +190,7 @@ export const PokemonScreen = ( { route }: Props ) => {
             </Chip>
           ) }
         />
-      ) } */}
+      ) }
 
       <View style={ { height: 30 } } />
 
@@ -257,8 +205,6 @@ export const PokemonScreen = ( { route }: Props ) => {
   );
 
 };
-
-
 
 
 const styles = StyleSheet.create( {

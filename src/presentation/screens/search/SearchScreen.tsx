@@ -22,13 +22,13 @@ export const SearchScreen = () => {
     queryFn: () => getGetPokemonsWithNamesId(),
   } );
 
-  console.log( pokemonNameList );
+  //console.log( pokemonNameList );
 
-  // Todo: aplicar debounce
+  // Todo: aplicar debounce1
   const pokemonNameIdList = useMemo( () => {
 
     // its a number
-    if ( isNaN( Number( term ) ) ) {
+    if ( !isNaN( Number( term ) ) ) {
       const pokemon = pokemonNameList.find( pokemon => pokemon.id === Number( term ) );
       return pokemon ? [ pokemon ] : [];
     }
@@ -56,18 +56,14 @@ export const SearchScreen = () => {
         mode="flat"
         autoFocus
         autoCorrect={ false }
-        onChangeText={ value => {
-          console.log( { term } );
-          console.log( { value } );
-          // setTerm;
-        } }
+        onChangeText={ setTerm }
         value={ term }
         theme={ { colors: { text: colorText } } } // Define a cor do texto usando o valor de colorText
       />
       <ActivityIndicator style={ { paddingTop: 20 } } />
 
       <Text style={ { color: colorText } }>
-        { JSON.stringify( pokemonNameList, null, 2 ) }
+        { JSON.stringify( pokemonNameIdList, null, 2 ) }
       </Text>
 
 
@@ -76,18 +72,12 @@ export const SearchScreen = () => {
         data={ [] as Pokemon[] }
         keyExtractor={ ( pokemon, index ) => `${ pokemon.id }-${ index }` }
         numColumns={ 2 }
-        style={ { paddingTop: top + 20 } }
-        // ListHeaderComponent={ () => (
-        //   <Text variant="displayMedium" style={ {
-        //     color: isDark ? 'white' : 'black',
-        //   } }>Pokédex</Text>
-        // ) }
         renderItem={ ( { item } ) => <PokemonCard pokemon={ item } /> }
         showsVerticalScrollIndicator
       // onEndReachedThreshold={ 0.6 }
       // onEndReached={ () => fetchNextPage() }
-      />
-    */}
+      /> */}
+
     </View>
   );
 };

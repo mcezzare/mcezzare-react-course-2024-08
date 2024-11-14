@@ -49,7 +49,6 @@ export const PokemonAudioPlayer = ( { pokemonAudio }: Props ) => {
       } }
     >
       <Button
-        // icon={ require( '../../../assets/audio-play.png' ) }
         onPress={ () => playAudio( pokemonAudio.latest ) } >
         {/* <Text
           variant="displaySmall"
